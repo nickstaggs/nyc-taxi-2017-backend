@@ -1,0 +1,1 @@
+COPY zones FROM '/Downloads/taxi+_zone_lookup.csv' DELIMITER ',' CSV HEADER;

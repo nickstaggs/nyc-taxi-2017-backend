@@ -1,0 +1,6 @@
+CREATE SEQUENCE routes_id_seq;
+CREATE TABLE routes AS SELECT nextval('routes_id_seq'),
+    z1.LOCATION_ID as PICKUP_LOCATION_ID,
+    z2.LOCATION_ID as DROPOFF_LOCATION_ID,
+    0 AS TOTAL_RIDES
+    FROM ZONES z1, ZONES z2;

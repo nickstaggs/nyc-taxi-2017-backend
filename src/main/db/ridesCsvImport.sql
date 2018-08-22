@@ -1,0 +1,1 @@
+COPY rides FROM '/Downloads/2017_Yellow_Taxi_Trip_Data.csv' DELIMITER ',' CSV HEADER;
