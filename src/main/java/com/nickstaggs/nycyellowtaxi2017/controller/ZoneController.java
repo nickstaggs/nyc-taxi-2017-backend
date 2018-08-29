@@ -17,9 +17,11 @@ public class ZoneController {
     @Autowired
     ZoneRepository zoneRepository;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/zones")
     public List<Zone> getAllZones() { return zoneRepository.findAll(); }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/zones/{id}")
     public Zone getZoneById(@PathVariable(value = "id") int zoneId) {
         return zoneRepository.findById(zoneId)

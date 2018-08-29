@@ -21,18 +21,21 @@ public class RouteController {
     @GetMapping("/routes")
     public ForbiddenException getAllRoutes() { return new ForbiddenException(); }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/routes/{id}")
     public Route getRouteById(@PathVariable(value = "id") Long routeId) {
         return routeRepository.findById(routeId)
                 .orElseThrow(() -> new ResourceNotFoundException("Route", "id", routeId));
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/routes", params = "pickupLocationId", method = RequestMethod.GET)
     public List<Route> getAllRoutesByPickupLocation(@RequestParam("pickupLocationId") int pickupLocationId) {
         return routeRepository.findByPickupLocationId(pickupLocationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Route", "id", pickupLocationId));
     }
 
+    @CrossOrigin(origins = "*")
     @RequestMapping(value = "/routes", params = "dropoffLocationId", method = RequestMethod.GET)
     public List<Route> getAllRoutesByDropoffLocation(@RequestParam("dropoffLocationId") int dropoffLocationId) {
         return routeRepository.findByDropoffLocationId(dropoffLocationId)

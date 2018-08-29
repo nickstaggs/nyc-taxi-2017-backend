@@ -24,6 +24,7 @@ public class RideController {
     }
 
     //Get single ride
+    @CrossOrigin(origins = "*")
     @GetMapping("/rides/{id}")
     public Ride getRideById(@PathVariable(value = "id") Integer rideId) {
         return rideRepository.findById(rideId)
