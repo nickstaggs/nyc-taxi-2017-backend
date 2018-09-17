@@ -18,9 +18,6 @@ public class RouteController {
     @Autowired
     RouteRepository routeRepository;
 
-    @GetMapping("/routes")
-    public ForbiddenException getAllRoutes() { return new ForbiddenException(); }
-
     @CrossOrigin(origins = "*")
     @GetMapping("/routes/{id}")
     public Route getRouteById(@PathVariable(value = "id") Long routeId) {
@@ -29,17 +26,26 @@ public class RouteController {
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/routes", params = "pickupLocationId", method = RequestMethod.GET)
-    public List<Route> getAllRoutesByPickupLocation(@RequestParam("pickupLocationId") int pickupLocationId) {
-        return routeRepository.findByPickupLocationId(pickupLocationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Route", "id", pickupLocationId));
-    }
+    @RequestMapping(value = "/routes", method = RequestMethod.GET)
+    public List<Route> getRouteByPickupLocationAndDropoffLocation(@RequestParam(value = "pickupLocationId", required = false) Integer pickupLocationId,
+                                                            @RequestParam(value = "dropoffLocationId", required = false) Integer dropoffLocationId) {
 
-    @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/routes", params = "dropoffLocationId", method = RequestMethod.GET)
-    public List<Route> getAllRoutesByDropoffLocation(@RequestParam("dropoffLocationId") int dropoffLocationId) {
-        return routeRepository.findByDropoffLocationId(dropoffLocationId)
-                .orElseThrow(() -> new ResourceNotFoundException("Route", "id", dropoffLocationId));
+        if (pickupLocationId == null && dropoffLocationId == null) {
+            throw new ForbiddenException();
+        }
+
+        if (pickupLocationId != null && dropoffLocationId == null) {
+            return routeRepository.findByPickupLocationId(pickupLocationId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Route", "id", pickupLocationId));
+        }
+
+        if (pickupLocationId == null && dropoffLocationId != null) {
+            return routeRepository.findByDropoffLocationId(dropoffLocationId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Route", "id", dropoffLocationId));
+        }
+
+        return routeRepository.findByPickupLocationIdAndDropoffLocationId(pickupLocationId, dropoffLocationId)
+                .orElseThrow(() -> new ResourceNotFoundException("Route", "id", pickupLocationId.toString() + " and " + dropoffLocationId.toString()));
     }
 
     @PostMapping("/routes")
