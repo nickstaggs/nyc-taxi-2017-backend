@@ -1,0 +1,112 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containerGroupName": {
+      "type": "string",
+      "defaultValue": "NTM-backend",
+      "metadata": {
+        "description": "Container Group name."
+      }
+    },
+    "storageAccount": {
+      "type": "string",
+      "defaultValue": "eusprdsans",
+      "metadata": {
+        "description": "Storage Account name."
+      }
+    },
+    "fileShare": {
+      "type": "string",
+      "defaultValue": "eus-prd-fs-taxi-db",
+      "metadata": {
+        "description": "Storage Account name."
+      }
+    },
+    "storageAccountKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Storage Account name."
+      }
+    }
+  },
+  "variables": {
+    "container1name": "db",
+    "container1image": "postgres:latest",
+    "container2name": "NTM-server",
+    "container2image": "openjdk:8-jdk-alpine"
+  },
+  "resources": [
+    {
+      "name": "[parameters('containerGroupName')]",
+      "type": "Microsoft.ContainerInstance/containerGroups",
+      "apiVersion": "2018-04-01",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "containers": [
+          {
+            "name": "[variables('container1name')]",
+            "properties": {
+              "image": "[variables('container1image')]",
+              "resources": {
+                "requests": {
+                  "cpu": 1,
+                  "memoryInGb": 1.5
+                }
+              },
+              "ports": [
+                {
+                  "port": 5432
+                }
+              ]
+            }
+          },
+          {
+            "name": "[variables('container2name')]",
+            "properties": {
+              "image": "[variables('container2image')]",
+              "resources": {
+                "requests": {
+                  "cpu": 1,
+                  "memoryInGb": 1.5
+                }
+              },
+              "ports": [
+                {
+                  "port": 80
+                }
+              ]
+            }
+          }
+        ],
+        "osType": "Linux",
+        "ipAddress": {
+          "type": "Public",
+          "ports": [
+            {
+              "protocol": "tcp",
+              "port": "80"
+            }
+          ]
+        },
+        "volumes": [
+          {
+            "name": "dbFiles",
+            "azureFile": {
+              "shareName": "[parameters('fileShare')]",
+              "storageAccountName": "[parameters('storageAccount')]",
+              "storageAccountKey": "[parameters('storageAccountKey')]"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "containerIPv4Address": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups/', parameters('containerGroupName'))).ipAddress.ip]"
+    }
+  }
+}
