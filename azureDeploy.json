@@ -9,6 +9,19 @@
         "description": "Container Group name."
       }
     },
+    "postgresUser": {
+      "type": "string",
+      "defaultValue": "postgres",
+      "metadata": {
+        "description": "Postgres Username"
+      }
+    },
+    "postgresPass": {
+      "type": "string",
+      "metadata": {
+        "description": "Postgres Password"
+      }
+    },
     "imageRegistryLoginServer": {
       "type": "string",
       "metadata": {
@@ -53,7 +66,7 @@
     "container1name": "db",
     "container1image": "postgres:latest",
     "container2name": "NTM-server",
-    "container2image": "nickstaggs/nyc-taxi-2017-backend"
+    "container2image": "nickstaggs/nyc-taxi-2017-backend:latest"
   },
   "resources": [
     {
@@ -76,6 +89,16 @@
               "ports": [
                 {
                   "port": 5432
+                }
+              ],
+              "environmentVariables": [
+                {
+                  "name": "POSTGRES_USER",
+                  "value": "[parameters('postgresUser')]"
+                },
+                {
+                  "name": "POSTGRES_PASSWORD",
+                  "secureValue": "[parameters('postgresPass')]"
                 }
               ]
             }
