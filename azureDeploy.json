@@ -9,6 +9,24 @@
         "description": "Container Group name."
       }
     },
+    "imageRegistryLoginServer": {
+      "type": "string",
+      "metadata": {
+        "description": "ACR server"
+      }
+    },
+    "imageRegistryUsername": {
+      "type": "string",
+      "metadata": {
+        "description": "Username for ACR"
+      }
+    },
+    "imageRegistryPassword": {
+      "type": "string",
+      "metadata": {
+        "description": "Password for ACR"
+      }
+    },
     "storageAccount": {
       "type": "string",
       "defaultValue": "eusprdsans",
@@ -35,7 +53,7 @@
     "container1name": "db",
     "container1image": "postgres:latest",
     "container2name": "NTM-server",
-    "container2image": "openjdk:8-jdk-alpine"
+    "container2image": "nickstaggs/nyc-taxi-2017-backend"
   },
   "resources": [
     {
@@ -78,6 +96,13 @@
                 }
               ]
             }
+          }
+        ],
+        "imageRegistryCredentials": [
+          {
+            "server": "[parameters('imageRegistryLoginServer')]",
+            "username": "[parameters('imageRegistryUsername')]",
+            "password": "[parameters('imageRegistryPassword')]"
           }
         ],
         "osType": "Linux",
