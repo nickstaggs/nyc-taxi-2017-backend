@@ -66,7 +66,7 @@
     "container1name": "db",
     "container1image": "postgres:latest",
     "container2name": "ntm-server",
-    "container2image": "nickstaggs/nyc-taxi-2017-backend:latest"
+    "container2image": "nytaximap.azurecr.io/nickstaggs/nyc-taxi-2017-backend:latest"
   },
   "resources": [
     {
