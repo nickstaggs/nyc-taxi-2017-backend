@@ -117,6 +117,13 @@
                 {
                   "port": 80
                 }
+              ],
+              "volumeMounts": [
+                {
+                  "name": "db-files",
+                  "mountPath": "/var/lib/postgresql/data",
+                  "readOnly": false
+                }
               ]
             }
           }
@@ -140,7 +147,7 @@
         },
         "volumes": [
           {
-            "name": "dbFiles",
+            "name": "db-files",
             "azureFile": {
               "shareName": "[parameters('fileShare')]",
               "storageAccountName": "[parameters('storageAccount')]",
