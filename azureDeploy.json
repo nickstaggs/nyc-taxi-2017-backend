@@ -4,7 +4,7 @@
   "parameters": {
     "containerGroupName": {
       "type": "string",
-      "defaultValue": "NTM-backend",
+      "defaultValue": "ntm-backend",
       "metadata": {
         "description": "Container Group name."
       }
@@ -65,7 +65,7 @@
   "variables": {
     "container1name": "db",
     "container1image": "postgres:latest",
-    "container2name": "NTM-server",
+    "container2name": "ntm-server",
     "container2image": "nickstaggs/nyc-taxi-2017-backend:latest"
   },
   "resources": [
