@@ -115,7 +115,7 @@
               },
               "ports": [
                 {
-                  "port": 80
+                  "port": 8080
                 }
               ],
               "volumeMounts": [
@@ -141,7 +141,7 @@
           "ports": [
             {
               "protocol": "tcp",
-              "port": "80"
+              "port": "8080"
             }
           ]
         },
