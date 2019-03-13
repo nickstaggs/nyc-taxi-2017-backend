@@ -91,6 +91,13 @@
                   "port": 5432
                 }
               ],
+              "volumeMounts": [
+                {
+                  "name": "db-files",
+                  "mountPath": "/var/lib/postgresql/data",
+                  "readOnly": false
+                }
+              ],
               "environmentVariables": [
                 {
                   "name": "POSTGRES_USER",
@@ -118,12 +125,8 @@
                   "port": 80
                 }
               ],
-              "volumeMounts": [
-                {
-                  "name": "db-files",
-                  "mountPath": "/var/lib/postgresql/data",
-                  "readOnly": false
-                }
+              "dependsOn": [
+                "[variables('container1name')]"
               ]
             }
           }
