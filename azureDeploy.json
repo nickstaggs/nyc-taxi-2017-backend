@@ -9,19 +9,6 @@
         "description": "Container Group name."
       }
     },
-    "postgresUser": {
-      "type": "string",
-      "defaultValue": "postgres",
-      "metadata": {
-        "description": "Postgres Username"
-      }
-    },
-    "postgresPass": {
-      "type": "string",
-      "metadata": {
-        "description": "Postgres Password"
-      }
-    },
     "imageRegistryLoginServer": {
       "type": "string",
       "metadata": {
@@ -47,24 +34,15 @@
         "description": "Storage Account name."
       }
     },
-    "fileShare": {
-      "type": "string",
-      "defaultValue": "eus-prd-fs-taxi-db",
-      "metadata": {
-        "description": "Storage Account name."
-      }
-    },
     "storageAccountKey": {
       "type": "string",
       "defaultValue": "",
       "metadata": {
-        "description": "Storage Account name."
+        "description": "Storage Account key."
       }
     }
   },
   "variables": {
-    "container1name": "db",
-    "container1image": "postgres:latest",
     "container2name": "ntm-server",
     "container2image": "nytaximap.azurecr.io/nickstaggs/nyc-taxi-2017-backend:latest"
   },
@@ -76,40 +54,6 @@
       "location": "[resourceGroup().location]",
       "properties": {
         "containers": [
-          {
-            "name": "[variables('container1name')]",
-            "properties": {
-              "image": "[variables('container1image')]",
-              "resources": {
-                "requests": {
-                  "cpu": 1,
-                  "memoryInGb": 1.5
-                }
-              },
-              "ports": [
-                {
-                  "port": 5432
-                }
-              ],
-              "volumeMounts": [
-                {
-                  "name": "db-files",
-                  "mountPath": "/var/lib/postgresql/data",
-                  "readOnly": false
-                }
-              ],
-              "environmentVariables": [
-                {
-                  "name": "POSTGRES_USER",
-                  "value": "[parameters('postgresUser')]"
-                },
-                {
-                  "name": "POSTGRES_PASSWORD",
-                  "value": "[parameters('postgresPass')]"
-                }
-              ]
-            }
-          },
           {
             "name": "[variables('container2name')]",
             "properties": {
@@ -144,17 +88,7 @@
               "port": "80"
             }
           ]
-        },
-        "volumes": [
-          {
-            "name": "db-files",
-            "azureFile": {
-              "shareName": "[parameters('fileShare')]",
-              "storageAccountName": "[parameters('storageAccount')]",
-              "storageAccountKey": "[parameters('storageAccountKey')]"
-            }
-          }
-        ]
+        }
       }
     }
   ],
