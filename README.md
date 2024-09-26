@@ -14,4 +14,6 @@ zones table and all the original ride data has been removed so it could be store
 
 The routes table has a column that is the count of the total rides for each route
 
-You can see the sql statements used to derive the data into is current state in the [db folder](/src/main/db)
+You can see the sql statements used to derive the data into its current state in the [db folder](/src/main/db)
+
+The frontend is brought in as a submodule so the above commands bring up everything and then you just have to navigate to http://localhost:3000/
