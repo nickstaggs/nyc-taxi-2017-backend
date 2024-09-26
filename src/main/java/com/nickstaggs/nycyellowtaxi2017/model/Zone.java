@@ -19,7 +19,4 @@ public class Zone implements Serializable{
 
     @Column(nullable = false, updatable = false)
     private String zone;
-
-    @Column(nullable = false, updatable = false)
-    private String serviceZone;
 }

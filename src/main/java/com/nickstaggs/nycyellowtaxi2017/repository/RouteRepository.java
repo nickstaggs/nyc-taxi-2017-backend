@@ -12,4 +12,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
 
     Optional<List<Route>> findByPickupLocationId(int pickupLocationId);
     Optional<List<Route>> findByDropoffLocationId(int dropoffLocationId);
+    Optional<List<Route>> findByPickupLocationIdAndDropoffLocationId(int pickupLocationId, int dropoffLocationId);
 }

@@ -1,0 +1,3 @@
+[submodule "nyc-taxi-2017-frontend"]
+	path = nyc-taxi-2017-frontend
+	url = https://github.com/nickstaggs/nyc-taxi-2017-frontend.git

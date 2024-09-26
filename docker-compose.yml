@@ -1,18 +1,22 @@
-version: "2"
 services:
   app:
     build: .
     ports:
-      - "80:8080"
+      - "80:80"
     depends_on:
-      - postgres
+      - db
 
-  postgres:
+  frontend:
+    build: ./nyc-taxi-2017-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app
+
+  db:
     image: "postgres:latest"
+    hostname: db
     ports:
       - "5432:5432"
     volumes:
-      - "./../nyc-psql-rides-db:/var/lib/postgresql/data"
-    env_file:
-      - ./../nyc-taxi.env
-
+      - "./nyc-psql-db:/var/lib/postgresql/data"

@@ -35,7 +35,7 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.16.16</version>
+      <version>1.18.34</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -157,33 +157,6 @@
             <goals> <goal>testCompile</goal> </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>com.dkanejs.maven.plugins</groupId>
-        <artifactId>docker-compose-maven-plugin</artifactId>
-        <version>1.0.1</version>
-        <executions>
-          <execution>
-            <id>up</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>up</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>down</id>
-            <phase>verify</phase>
-            <goals>
-              <goal>down</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <composeFile>${project.basedir}/docker-compose-maven.yaml</composeFile>
-          <detachedMode>true</detachedMode>
-          <removeVolumes>true</removeVolumes>
-          <detail>true</detail>
-        </configuration>
       </plugin>
     </plugins>
   </build>
